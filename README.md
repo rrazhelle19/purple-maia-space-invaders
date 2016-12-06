@@ -1,2 +1,2 @@
 # purple-maia-space-invaders
-Space Invaders demo code
+Space Invaders phaser code
