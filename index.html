@@ -10,7 +10,7 @@
 <body>
 
 <div id="game"></div>
-
+<script src="assets/js/phaser.js"></script>
     
     
 <script>
@@ -18,8 +18,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
-
-    
+    game.load.image('bullet', 'assests/games/invaders/bullet.png');
     game.load.image('enemyBullet', 'assets/games/invaders/enemy-bullet.png');
     game.load.spritesheet('invader', 'assets/games/invaders/invader32x32x4.png', 32, 32);
     game.load.image('ship', 'assets/games/invaders/player.png');
@@ -28,8 +27,9 @@ function preload() {
     game.load.image('background', 'assets/games/starstruck/background2.png');
 
 }
-
-
+    
+var player;
+var aliens;
 var bullets;
 var bulletTime = 0;
 var cursors;
@@ -82,7 +82,7 @@ function create() {
     aliens.enableBody = true;
     aliens.physicsBodyType = Phaser.Physics.ARCADE;
 
-    // createAliens();
+    createAliens();
 
     //  The score
     scoreString = 'Score : ';
@@ -142,15 +142,16 @@ function createAliens () {
 
     function setupInvader (invader) {
 
-        
+       invader.anchor.x = 0.5;
+       invader.anchor.y = 0.5;
+       invader.animations.add('kaboom');
 
     }
 
 
-
-
-
-
+ function descend() {
+    aliens.y += 10;
+}
 
 
 function update() {
@@ -316,6 +317,15 @@ function resetBullet (bullet) {
 
 }
 
+ function restart() {
+     lives.callAll('revive');
+     
+     alives.remvoeAll();
+     createAliens();
+     
+     player.revive();
+     stateText.visible = false;
+ }
 
 </script>
 
